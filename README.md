@@ -4,10 +4,14 @@ Short description of aim, task to be completed
 
 ## Table of Contents
 0. [Requirements](#requirements)
+   
 1. [Installation](#installation)
-  2.1 [First time](#first)
-  2.2 [Updating](#updating)
-3. [Step by step guide](#steps)
+
+   1.1 [First time](#first)
+
+   1.2 [Updating](#updating)
+
+2. [Step by step guide](#steps)
 
 <a name="requirements"></a>
 ## 0. Requirements
