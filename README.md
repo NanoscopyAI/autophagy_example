@@ -26,7 +26,6 @@ Internet access, [VSCode](https://code.visualstudio.com/download) installed, [Ju
 - Open VSCode
 - Open a terminal File -> Terminal -> New Terminal
 - In the terminal, we will clone SPECHT.jl:
-- 
 ```bash
 git clonehttps://github.com/bencardoen/SPECHT.jl.git
 ```
@@ -110,7 +109,7 @@ When completed, you'll see something like this
 ```bash
 [ Info: 2023-12-22 16:20:01 2ch.jl:130: Saving tabular results in /outputdirectory/table_spots.csv
 ```
-
+--pattern "*[0,1].tif"
 (note on Linux paths are separated by '/', on Windows it will be '\'.)
 
 At the end you will have 
@@ -124,3 +123,11 @@ At the end you will have
     - The channel, replicate, cellnumber and treatment describe what data this object belongs to.
 
 If you want to count objects per cell, you can do so by `groupby` features in R, aggregating over the columns `replicate, cellnumber, treatment, channel`. 
+
+## FAQ
+
+### Different channel naming pattern
+
+Q: My files are ending with 0.tif and 1.tif, how do I make this work?
+
+A: Change the parameter to modify the pattern `--pattern "*[0,1].tif"`
