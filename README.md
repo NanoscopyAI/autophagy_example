@@ -13,6 +13,8 @@ Short description of aim, task to be completed
 
 2. [Step by step guide](#steps)
 
+3. [Troubleshooting](#faq)
+
 <a name="requirements"></a>
 ## 0. Requirements
 Internet access, [VSCode](https://code.visualstudio.com/download) installed, [Julia](https://julialang.org/downloads/) installed. Optionally in VSCode [install the Julia plugins](https://code.visualstudio.com/docs/languages/julia). 
@@ -124,10 +126,40 @@ At the end you will have
 
 If you want to count objects per cell, you can do so by `groupby` features in R, aggregating over the columns `replicate, cellnumber, treatment, channel`. 
 
-## FAQ
+<a name="faq"></a>
+## 3. FAQ
 
-### Different channel naming pattern
+### 3.1 Different channel naming pattern
 
 Q: My files are ending with 0.tif and 1.tif, how do I make this work?
 
 A: Change the parameter to modify the pattern `--pattern "*[0,1].tif"`
+
+### 3.1 Directory/file not found errors
+
+Q: I get directory not found, but it's right there?!
+
+A: On Windows, use the \ path separator
+Windows:
+```bash
+julia --project=. scripts\2ch.jl --inpath data\ND --outpath data\Output --pattern "*[0,1].tif"
+```
+
+Linux/Mac:
+```bash
+julia --project=. scripts/2ch.jl --inpath data/ND --outpath data/Output --pattern "*[0,1].tif"
+```
+
+When in doubt, check where the current directory is in the script
+```bash
+julia -e '@info pwd()'
+```
+This will print the full path of the current directory, the script looks in relative directories below this path (unless you provide a full or absolute path).
+
+Q: (Mac) I get .DS_Store is not a directory ?!
+
+A: .DS_Store is hidden metadata used by Mac, you can remove it from the data to prevent the script from getting confused
+Assuming you want to use the `data` folder, this command recursively deletes it from the data folder
+```bash
+find ./data -name ".DS_Store" -print -delete
+```
