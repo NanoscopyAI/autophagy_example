@@ -29,7 +29,7 @@ Internet access, [VSCode](https://code.visualstudio.com/download) installed, [Ju
 - Open a terminal File -> Terminal -> New Terminal
 - In the terminal, we will clone SPECHT.jl:
 ```bash
-git clonehttps://github.com/bencardoen/SPECHT.jl.git
+git clone https://github.com/bencardoen/SPECHT.jl.git
 ```
 
 The output will look similar to this:
@@ -124,7 +124,14 @@ At the end you will have
     - The area is the number of non zero pixels of this object (mask size)
     - The channel, replicate, cellnumber and treatment describe what data this object belongs to.
 
-If you want to count objects per cell, you can do so by `groupby` features in R, aggregating over the columns `replicate, cellnumber, treatment, channel`. 
+A 2nd cs is generated for you, contained counts of spots per cell, per channel. Spots that overlap are counted as well, the channel column is then set to '12', rather than '1' or '2'.
+
+You can filter the minimum size of spots to be counted, as well as the minimum number of pixels of overlap to count before counting colocalizing.
+
+For example, to ignore (do not count) spots that have size < 5 pixels, and overlap > 1 pixel, you would pass these arguments:
+```bash
+ julia --project=. scripts/2ch.jl --inpath datadirectory --outpath outputdirectory --min_overlap 1 --filterleq 5
+```
 
 <a name="faq"></a>
 ## 3. FAQ
@@ -135,7 +142,7 @@ Q: My files are ending with 0.tif and 1.tif, how do I make this work?
 
 A: Change the parameter to modify the pattern `--pattern "*[0,1].tif"`
 
-### 3.1 Directory/file not found errors
+### 3.2 Directory/file not found errors
 
 Q: I get directory not found, but it's right there?!
 
@@ -163,3 +170,31 @@ Assuming you want to use the `data` folder, this command recursively deletes it 
 ```bash
 find ./data -name ".DS_Store" -print -delete
 ```
+### I want more complex grouping, how do I do this?
+
+Suppose you want to exclude spots with mean intensity < 0.25, before counting them. 
+Let's assume the csv table for all spots is saved in the directory `output/table_spots.csv`:
+
+Start a Julia session in the top directory of the repository
+```bash
+julia --project=.
+```
+In Julia, then execute the following
+```julia
+using CSV, DataFrames, SPECHT
+# Load the table
+df = CSV.read("output/table_spots.csv", DataFrame)
+# Drop all spots with mean intensity < 0.25
+df = filter(row -> row.mean_intensity >= 0.25, df)
+# Reuse the counting function
+grouped_df = group_data(df, 0, 0) # Any overlap, all sizes
+# Save to CSV
+CSV.write("intensityfiltered.csv", grouped_df)
+```
+You can also save this snippet as a script (for example `intensity.jl`), and execute it like so
+```bash
+julia --project=. intensity.jl
+```
+More complex rules can be executed in similar fashion. Alternatively, both R and Python can work with the CSV file for custom postprocessing.
+
+### NOTE: If there are no spots for a channel in a cell, there will not be any lines in the CSV file for that cell and channel.
