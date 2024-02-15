@@ -205,5 +205,5 @@ If you increase it, you risk more false negatives (no spots where there should b
 
 Changing it is done as follows, for example lowering from 1.75 to 1.5:
 ```bash
-julia --project=. scripts\2ch.jl --inpath data\ND --outpath data\Output --pattern "*[0,1].tif" --zvalue 1.5
+julia --project=. scripts\2ch.jl --inpath data\ND --outpath data\Output --pattern "*[0,1].tif" --zval 1.5
 ```
