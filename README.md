@@ -198,3 +198,12 @@ julia --project=. intensity.jl
 More complex rules can be executed in similar fashion. Alternatively, both R and Python can work with the CSV file for custom postprocessing.
 
 ### NOTE: If there are no spots for a channel in a cell, there will not be any lines in the CSV file for that cell and channel.
+
+### Lowering or increasing the detection of spots
+By default the adaptive threshold to pick up spots is set at 1.75. If you lower this, more candidate spots can be detected, at the risk of false positives. 
+If you increase it, you risk more false negatives (no spots where there should be). 
+
+Changing it is done as follows, for example lowering from 1.75 to 1.5:
+```bash
+julia --project=. scripts\2ch.jl --inpath data\ND --outpath data\Output --pattern "*[0,1].tif" --zvalue 1.5
+```
