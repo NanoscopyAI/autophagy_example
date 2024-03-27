@@ -124,7 +124,7 @@ At the end you will have
     - The area is the number of non zero pixels of this object (mask size)
     - The channel, replicate, cellnumber and treatment describe what data this object belongs to.
 
-A 2nd cs is generated for you, contained counts of spots per cell, per channel. Spots that overlap are counted as well, the channel column is then set to '12', rather than '1' or '2'.
+A 2nd csv is generated for you, contained counts of spots per cell, per channel. Spots that overlap are counted as well, the channel column is then set to '12', rather than '1' or '2'.
 
 You can filter the minimum size of spots to be counted, as well as the minimum number of pixels of overlap to count before counting colocalizing.
 
@@ -132,6 +132,16 @@ For example, to ignore (do not count) spots that have size < 5 pixels, and overl
 ```bash
  julia --project=. scripts/2ch.jl --inpath datadirectory --outpath outputdirectory --min_overlap 1 --filterleq 5
 ```
+
+### 2.3 Enabling autotuning
+
+If you prefer the code to use its adaptive mode, you can enabling autotuning, by adding these two parameters
+```bash
+ --auto-tune --prc 1
+```
+
+* 'auto-tune' enables the autotuning mode, so -z will now be computed for you. 
+* 'prc x' sets the precision recall balance, > 1 is more recall (more objects), < 1 is fewer objects
 
 <a name="faq"></a>
 ## 3. FAQ
