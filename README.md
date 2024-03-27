@@ -143,6 +143,10 @@ If you prefer the code to use its adaptive mode, you can enabling autotuning, by
 * 'auto-tune' enables the autotuning mode, so -z will now be computed for you. 
 * 'prc x' sets the precision recall balance, > 1 is more recall (more objects), < 1 is fewer objects
 
+**IMPORTANT**
+The detection relies on the idea that there is heavy background noise. If you have images where there is almost no noise, increase PRC to say 2-4 instead, otherwise you may not pick up the objects you intend to pick up. 
+In images with heavy noise, a PRC of +- 1 is a good starting point.
+
 <a name="faq"></a>
 ## 3. FAQ
 
