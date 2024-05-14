@@ -1,6 +1,5 @@
 # Walkthrough
-Short description of aim, task to be completed
-
+This is a tutorial on how to use SPECHT to process autophagy data using your own computer.
 
 ## Table of Contents
 0. [Requirements](#requirements)
